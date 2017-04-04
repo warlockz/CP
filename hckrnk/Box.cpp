@@ -72,6 +72,11 @@ class Box
             return out;
         }
 
+        void input(istream& in) const
+        {
+        	in>>B.l>>B.b>>B.h;
+        }
+
 	public :
 		long l,b,h;
 
@@ -86,6 +91,11 @@ long long Box::CalculateVolume(){ return (l*b*h);}
 //bool operator < (const Box& b,const Box& c) { return(((b.l < c.l) || (b.b < c.b) || (b.h < c.h))); }
 //bool operator > (const Box& b,const Box& c) { return((operator < (b,c))); }
 
+istream& operator<<(istream& in,const Box& B)
+{
+    B.input(in);
+    return in;
+}
 
 
 void check2()
