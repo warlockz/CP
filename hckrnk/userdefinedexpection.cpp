@@ -18,6 +18,19 @@ class BadLengthException
         int text_length;
 };
 
+class BadLengthExceptionV : exception 
+{
+    public:
+        BadLengthExceptionV(int length):text_length(length)
+        {}
+        const int what()
+        {
+            return text_length;
+        }
+    private:
+        int text_length;
+};
+
 
 bool checkUsername(string username) {
 	bool isValid = true;
