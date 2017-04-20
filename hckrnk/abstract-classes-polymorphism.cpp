@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <vector>
 #include <map>
@@ -31,28 +32,35 @@ class Cache{
 class LRUCache : public Cache
 {
     public:
-        LRUCache(int capacity):cp(capacity),tail(NULL),head(NULL)
+        LRUCache(int capacity)
         {
+            cp = capacity;
+            tail = NULL;
+            head = NULL;
+            //cout << "capacity = "<<cp<<"\n";
             mp.clear();
         }
         void set(int key,int val)
         {
-            if(cp)
+            //cout << "set cp = "<<cp<<"map size =" <<mp.size()<< " \n";
+            if(mp.size() < cp)
             {
+               //cout << "set ss   \n";
                 if(mp.size())
                 {
+                    //cout << "set 1\n";
                     if(mp.find(key) != mp.end())
                     {
-                        
-                    }
-                    else if(mp.size() < cp)
-                    {
-                    
+                        //cout << "set 2\n";
+                        Node* node = mp[key];
+                        node->value = val;
                     }
                     else
                     {
-                        Node* node = new Node(tail->prev,tail->next,key,val);
-                        tail = node;
+                        //cout << "set 3\n";
+                        Node* node = new Node(NULL,head,key,val);
+                        head = node; 
+                        mp.insert(std::make_pair(key,node));
                     }
                 }
                 else
@@ -60,19 +68,70 @@ class LRUCache : public Cache
                     Node* node = new Node(key,val);
                     head = node;
                     tail = node;
+                    mp.insert(std::make_pair(key,node));
                 }
+            }
+            else
+            {
+               Node* temp = tail;
+               Node* node = new Node(tail->prev,tail->next,key,val);
+               tail = node;   
+               mp.insert(std::make_pair(key,node));
+               std::map<int,Node*>::iterator it = mp.find(temp->key);
+               if(it != mp.end())
+               {
+                  mp.erase(it);
+               }
+               delete temp;
             }
         }
 
         int get(int key)
         {
-            if((cp) && (mp.size() < cp))
+            //cout << "get cp = "<<cp<<"map size =" <<mp.size()<< " \n";
+            if(cp && mp.size())
             {
-                
+               if (mp.find(key) != mp.end())
+               {
+                  //cout << "get 111"<< " \n";
+                  Node* node = mp[key];
+                  //cout << "get 222"<< " \n";
+                  if(mp.size() > 1 && node)
+                  {
+
+                     Node* prev = node->prev;
+                     Node* next = node->next;
+                     if(prev)
+                     {
+                        prev->next = next;   
+                     } 
+                     if(next)
+                     {
+                     
+                        next->prev = prev;
+                     }
+                     //cout << "get 333"<< " \n";
+                     node->prev = head->prev;
+                     node->next = head->next;
+                     head = node;
+                  }
+                  //cout << "get 4444"<< " \n";
+                  return (node->value);           
+               }   
+               else
+               {
+                  return -1;
+               }
             }
+            else
+            {
+               return -1;
+            }
+
         }
     
 };
+
 
 int main() {
    int n, capacity,i;
