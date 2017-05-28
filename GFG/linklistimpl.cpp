@@ -106,9 +106,33 @@ void deleteNodeAt(Node **headref,int  position)
 	free(prev);
 }
 
+int getLengthIterative(Node* head)
+{
+	int count = 0;
+
+	while(head)
+	{
+		head = head->next;
+		count++;
+	}
+	return count;
+}
+
+int getLengthIterative(Node* head)
+{
+	int count = 0;
+
+	while(head)
+	{
+		head = head->next;
+		count++;
+	}
+	return count;
+}
+
 void printlist(Node *node)
 {
-	cout << "\n";
+	cout << "\n";	
 	while(node)
 	{
 		cout <<"->["<< node->data<<"][]";
