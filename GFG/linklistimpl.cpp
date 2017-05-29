@@ -6,7 +6,7 @@ using namespace std;
 struct Node
 {
 	int data;
-	struct Node* next;
+	Node* next;
 };
 
 
@@ -118,16 +118,70 @@ int getLengthIterative(Node* head)
 	return count;
 }
 
-int getLengthIterative(Node* head)
+int getLengthRecursive(Node* head)
 {
 	int count = 0;
 
-	while(head)
+	if(head == NULL)
 	{
-		head = head->next;
-		count++;
+		return 0;
 	}
-	return count;
+
+	return (1 + getLengthRecursive(head->next));
+}
+
+
+void swap(Node **headref,int x, int y)
+{
+	Node *prevX = NULL, *prevY = NULL;
+	Node *curX,*curY;
+
+	if (x == y)
+	{
+		return;
+	}
+
+	curX = *headref;
+	while(curX && (curX->data != x))
+	{
+		prevX = curX;
+		curX = curX->next;
+	}
+
+	curY = *headref;
+
+	while(curY && (curY->data != y))
+	{
+		prevY = curY;
+		curY = curY->next;
+	}
+
+	if(!curX || !curY)
+	{
+		return;
+	}
+
+	if(prevX)
+	{
+		prevX->next = curY;
+	}
+	else
+	{
+		*headref = curY;
+	}
+
+	if (prevY)
+	{
+		prevY->next = curX;
+	}
+	else
+	{
+		*headref = curX;
+	}
+
+	Node *temp = curY->next;
+	curY->next = curX->next;
+	curX->next = temp;
 }
 
 void printlist(Node *node)
@@ -140,8 +194,6 @@ void printlist(Node *node)
 	}
 	cout<<"\n";
 }
-
-
 
 int main(int argc, char const *argv[])
 {
@@ -162,6 +214,15 @@ int main(int argc, char const *argv[])
 	deleteNodeAt(&head,1);
 	printlist(head);
 	deleteNodeAt(&head,0);
+	printlist(head);
+	insertatfront(&head,2);
+	insertatfront(&head,1);
+	cout << "Length Iterative : " << getLengthIterative(head) << "\n";
+	cout << "Length Recursive : " << getLengthRecursive(head) << "\n";
+	printlist(head);
+	swap(&head,1,9);
+	printlist(head);
+	swap(&head,7,4);
 	printlist(head);
 	return 0;
 }
