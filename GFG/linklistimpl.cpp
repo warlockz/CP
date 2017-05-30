@@ -195,6 +195,25 @@ void printlist(Node *node)
 	cout<<"\n";
 }
 
+void reverse(Node **headref)
+{
+	Node *cur = *headref;
+
+	Node *prev = NULL,*fwd = NULL;
+	while(cur)
+	{
+		fwd = cur->next;
+		cur->next = prev;
+		prev = cur;
+		cur = fwd;
+	}
+
+	*headref = prev;
+
+	//Time Complexity (TC) = O (n)
+	//Space Compelxity (SC) = O (1)
+}
+
 int main(int argc, char const *argv[])
 {
 	Node* head = NULL;
@@ -217,12 +236,15 @@ int main(int argc, char const *argv[])
 	printlist(head);
 	insertatfront(&head,2);
 	insertatfront(&head,1);
+	printlist(head);
 	cout << "Length Iterative : " << getLengthIterative(head) << "\n";
 	cout << "Length Recursive : " << getLengthRecursive(head) << "\n";
 	printlist(head);
 	swap(&head,1,9);
 	printlist(head);
 	swap(&head,7,4);
+	printlist(head);
+	reverse(&head);
 	printlist(head);
 	return 0;
 }
