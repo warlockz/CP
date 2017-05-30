@@ -195,17 +195,23 @@ void printlist(Node *node)
 	cout<<"\n";
 }
 
+/*
+ Reverse()
+Asked in: Accolite, Adobe, Cisco, Cognizant , 
+IgniteWorld , Mahindra Comviva, Microsoft, Paytm, SAP, Snapdeal , Tejas Network, Teradata
+
+*/
 void reverse(Node **headref)
 {
 	Node *cur = *headref;
 
-	Node *prev = NULL,*fwd = NULL;
+	Node *prev = NULL,*next = NULL;
 	while(cur)
 	{
-		fwd = cur->next;
+		next = cur->next;
 		cur->next = prev;
 		prev = cur;
-		cur = fwd;
+		cur = next;
 	}
 
 	*headref = prev;
@@ -213,6 +219,62 @@ void reverse(Node **headref)
 	//Time Complexity (TC) = O (n)
 	//Space Compelxity (SC) = O (1)
 }
+
+void RecursiveReverse(Node **headref)
+{
+	if(!*headref)
+	{
+		return;
+	}
+
+	Node *first = *headref;		
+	Node *rest = first->next;
+
+	if(!rest)
+	{
+		return;
+	}
+
+	RecursiveReverse(&rest);
+
+	first->next->next = first;
+	first->next = NULL;
+	*headref = rest;
+
+	//Time Complexity (TC) = O (n)
+	//Space Compelxity (SC) = O (1)
+}
+
+// Below : Tail Recursive method
+
+void TailRecReverse(Node *cur, Node *prev, Node **head)
+{
+
+	if(!cur->next)
+	{
+		*head = cur;
+		cur->next = prev;
+		return;
+	}
+
+	Node *next = cur->next;
+	cur->next = prev;
+
+	TailRecReverse(next,cur,head);
+}
+
+void RecursiveReverseMethodTail(Node **headref)
+{
+	if(!headref)
+	{
+		return;
+	}
+	TailRecReverse(*headref,NULL,headref);
+}
+
+//TODO :-
+// http://www.geeksforgeeks.org/iteratively-reverse-a-linked-list-using-only-2-pointers/
+
 
 int main(int argc, char const *argv[])
 {
@@ -246,5 +308,10 @@ int main(int argc, char const *argv[])
 	printlist(head);
 	reverse(&head);
 	printlist(head);
+	RecursiveReverse(&head);
+	printlist(head);
+	RecursiveReverseMethodTail(&head);
+	printlist(head);
+
 	return 0;
 }
