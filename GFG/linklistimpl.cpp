@@ -276,6 +276,31 @@ void RecursiveReverseMethodTail(Node **headref)
 // http://www.geeksforgeeks.org/iteratively-reverse-a-linked-list-using-only-2-pointers/
 
 
+// Asked in: Adobe, Microsoft, Paytm, Snapdeal
+Node* ReverseIntoGroups(Node *head,int k)
+{
+	Node *cur = head, *prev = NULL, *next = NULL;
+	int count = 0;
+
+	while(cur && (count < k))
+	{
+		next = cur->next;
+		cur->next = prev;
+		prev = cur;
+		cur = next;
+		count++;
+	}
+
+	if(next != NULL)
+	{
+		head->next = ReverseIntoGroups(next,k);
+	}
+
+	return prev;
+	//Time Complexity: O(n)
+}
+
+
 int main(int argc, char const *argv[])
 {
 	Node* head = NULL;
@@ -312,6 +337,7 @@ int main(int argc, char const *argv[])
 	printlist(head);
 	RecursiveReverseMethodTail(&head);
 	printlist(head);
-
+	head = ReverseIntoGroups(head,3);
+	printlist(head);
 	return 0;
 }
