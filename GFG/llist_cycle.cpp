@@ -23,7 +23,7 @@ void push(Node **headref,int data)
 	new_node->next = *headref;
 	*headref = new_node;
 }
-
+// Method 1
 void removeLoop(Node *head,Node* slow)
 {
 	Node *cur1 = head;
@@ -44,7 +44,8 @@ void removeLoop(Node *head,Node* slow)
 	cur2->next = NULL;
 }
 
-// Flyod`s Cycle Detection Algo
+// Flyod`s Cycle Detection Algo or
+// Tortoise and Hare Algo
 bool isLooping(Node *head)
 {
 	if(head == NULL)
@@ -59,11 +60,43 @@ bool isLooping(Node *head)
 		fast = fast->next->next;
 		if(slow == fast)
 		{
-			removeLoop(head,slow);
-			return true;
+			//Solution 1
+			 removeLoop(head,slow);
+			 return true;
 		}
 	}
+
 	return false;
+}
+
+//	Soluion 2 / // Method2
+void detectAndRemove(Node *head)
+{
+	Node *slow = head;
+	Node *fast = head->next;
+
+	while(fast && fast->next)
+	{
+		if (slow == fast)
+		{
+			break;
+		}
+		slow = slow->next;
+		fast = fast->next->next;
+	}
+
+	if (slow == fast)
+	{
+		slow = head;
+
+		while(slow != fast->next)
+		{
+			slow = slow->next;
+			fast = fast->next;
+		}
+		// since fast is looping point
+		fast->next = NULL;
+	}
 }
 
 void print(Node *head)
@@ -90,8 +123,9 @@ int main(int argc, char **argv)
 	print(head);
 	//now making loop or cycle in LL
 	head->next->next->next = head->next;
-	cout << "Is Cycle or loop in LL : " <<isLooping(head) << "\n";
+	//cout << "Is Cycle or loop in LL : " <<isLooping(head) << "\n";
 	cout << "Rmove loop \n";
+	detectAndRemove(head);
 	print(head);
 
 }
