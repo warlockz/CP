@@ -97,8 +97,8 @@ void deleteNode(Node **headref,Node *del)
 
 void print(Node *head)
 {
-	cout << "In fwd direction :- \n";
 	Node *prev = head;
+	cout << "\n In fwd direction :- \n";
 	while(head != NULL)
 	{
 		cout << "<=>[" << head->data << "]";
@@ -111,7 +111,7 @@ void print(Node *head)
 		cout << "[" << prev->data << "]<=>";
 		prev = prev->prev;
 	}
-	cout <<"\n";
+	cout <<"\n";		
 }
 
 // Hint to reverse DLL : swap prev and next pointers hehe :)
