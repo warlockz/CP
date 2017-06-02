@@ -114,6 +114,25 @@ void print(Node *head)
 	cout <<"\n";
 }
 
+// Hint to reverse DLL : swap prev and next pointers hehe :)
+void reverse(Node **headref)
+{
+	Node *head = *headref;
+	Node *temp = NULL;
+
+	while(head != NULL)
+	{
+		temp = head->prev;
+		head->prev = head->next;
+		head->next = temp;
+		head = head->prev;
+	}	
+	if(temp != NULL)
+	{
+		*headref = temp->prev;
+	}
+}
+
 int main(int argc, char **argv)
 {
 	Node *head = NULL;
@@ -127,5 +146,7 @@ int main(int argc, char **argv)
 	deleteNode(&head,head);
 	print(head);
 	deleteNode(&head,head->next->next);
+	print(head);
+	reverse(&head);
 	print(head);
 }
