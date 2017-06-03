@@ -20,7 +20,7 @@ stack* createstack(int capacity)
 
 void push()
 {
-	
+	//TODO
 }
 
 int main()
