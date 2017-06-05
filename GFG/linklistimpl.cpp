@@ -342,7 +342,48 @@ Node* MergeList(Node *head1, Node *head2)
 	free(dummy);
 	return temp;
 
-	//Time Complexit  : O(n + m);
+	//Time Complexity  : O(n + m);
+}
+
+// Solution 2 : without creating dummy node;
+// Using Local References
+
+void MoveNode(Node **destref, Node **srcref)
+{
+	Node *new_node = *srcref;
+	(*srcref) = (*srcref)->next;
+	new_node->next = (*destref);
+	(*destref) = new_node;
+}
+
+Node* SortedMerge(Node *a, Node *b)
+{
+	Node *result = NULL;
+	Node **lastref = &result;
+
+	while((a != NULL) && (b != NULL))
+	{
+		if(a->data < b->data)
+		{
+			MoveNode(lastref,&a);
+		}
+		else
+		{
+			MoveNode(lastref,&b);
+		}			
+		lastref = &((*lastref)->next);
+	}
+
+	if(a == NULL)
+	{
+		*lastref = b;
+	}
+	if(b == NULL)
+	{
+		*lastref = a;
+	}
+
+	return result;
 }
 
 
@@ -400,6 +441,23 @@ int main(int argc, char const *argv[])
 	printlist(head2);
 
 	Node *result = MergeList(head1,head2);
+	printlist(result);
+
+	Node *a = NULL;
+	insertatend(&a,0);
+	insertatend(&a,1);
+	insertatend(&a,2);
+	insertatend(&a,9);
+	printlist(a);
+
+	Node *b = NULL;
+	insertatend(&b,1);
+	insertatend(&b,3);
+	insertatend(&b,4);
+	insertatend(&b,5);
+	printlist(b);
+
+	result = SortedMerge(a,b);
 	printlist(result);
 
 	return 0;
