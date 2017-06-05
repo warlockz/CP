@@ -52,19 +52,65 @@ void print(Node *head)
 	cout << "\n";
 }
 
+// V.IMP ***Tricky Asked in: Amazon, Microsoft
+void SortedInsert(Node **headref,int data)
+{
+	Node *new_node = (Node*)malloc(sizeof(Node));
+	new_node->data = data;
+	new_node->next = NULL;
+
+	if(*headref == NULL)     // if list empty
+	{
+		*headref = new_node;
+		new_node->next = new_node;
+	}
+	else if((*headref)->data > data) // if head node 
+	{
+		new_node->next = (*headref);
+		Node *temp = (*headref);
+		while(temp->next != (*headref))
+		{
+			temp = temp->next;
+		}
+		temp->next = new_node;
+		(*headref) = new_node;
+	} 
+	else // other than head node
+	{
+		Node *temp = (*headref);
+		while((temp->next != (*headref)) && (temp->next->data < data))
+		{
+			temp = temp->next;
+		}
+		new_node->next = temp->next;
+		temp->next = new_node;
+	}
+}
+
 int main(int argc, char **argv)
 {
 	Node *head = NULL;
-	Node *head1,*head2;
+	Node *head1 = NULL,*head2 = NULL;
 	insertatend(&head,1);
 	insertatend(&head,2);
-	insertatend(&head,3);
 	insertatend(&head,4);
 	insertatend(&head,5);
+	insertatend(&head,7);
 	print(head);
-	splitlist(head,&head1,&head2);
-	print(head1);
-	print(head2);
+	//splitlist(head,&head1,&head2);
+	//print(head1);
+	//print(head2);
+	SortedInsert(&head,3);
+	print(head);
+	SortedInsert(&head,0);
+	print(head);
+	SortedInsert(&head,8);
+	print(head);
+
+	Node *s1 = NULL;
+	SortedInsert(&s1,100);
+	SortedInsert(&s1,101);
+	print(s1);	
 }
 
 
