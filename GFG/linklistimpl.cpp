@@ -301,6 +301,51 @@ Node* ReverseIntoGroups(Node *head,int k)
 }
 
 
+/*
+Asked in: Amazon, Belzabar, Brocade, 
+Factset, Flipkart, Microsoft, OATS Systems, Oracle, Samsung, Synopsys
+*/
+// solution 1
+Node* MergeList(Node *head1, Node *head2)
+{
+	Node *dummy = (Node*)malloc(sizeof(Node));
+	dummy->next = NULL;
+	Node *temp = dummy;
+
+	while(head1 != NULL && head2 != NULL)
+	{
+		if(head1->data < head2->data)
+		{
+			temp->next = head1;
+			temp = temp->next;
+			head1 = head1->next;	
+		}
+		else
+		{
+			temp->next = head2;
+			temp = temp->next;
+			head2 = head2->next;
+		}
+	}
+
+	if (head1 == NULL)
+	{
+		temp->next = head2;
+	}
+
+	if (head2 == NULL)
+	{
+		temp->next = head1;
+	}
+
+	temp = dummy->next;
+	free(dummy);
+	return temp;
+
+	//Time Complexit  : O(n + m);
+}
+
+
 int main(int argc, char const *argv[])
 {
 	Node* head = NULL;
@@ -339,5 +384,23 @@ int main(int argc, char const *argv[])
 	printlist(head);
 	head = ReverseIntoGroups(head,3);
 	printlist(head);
+
+	Node* head1 = NULL;
+	insertatend(&head1,1);
+	insertatend(&head1,3);
+	insertatend(&head1,5);
+	insertatend(&head1,9);
+	printlist(head1);
+
+	Node* head2 = NULL;
+	insertatend(&head2,0);
+	insertatend(&head2,1);
+	insertatend(&head2,6);
+	insertatend(&head2,7);
+	printlist(head2);
+
+	Node *result = MergeList(head1,head2);
+	printlist(result);
+
 	return 0;
 }
