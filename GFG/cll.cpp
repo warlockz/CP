@@ -85,6 +85,7 @@ void SortedInsert(Node **headref,int data)
 		new_node->next = temp->next;
 		temp->next = new_node;
 	}
+	// Time Complexity = O(n)
 }
 
 int main(int argc, char **argv)
