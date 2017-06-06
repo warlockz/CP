@@ -84,6 +84,8 @@ void SplitList(Node *head, Node **head1, Node **head2)
 	fast->next = slow->next; //since head2 can be NULL if one node in list
 	//makin 1st hhalf circular
 	slow->next = head;
+
+	//Time Complexity : O(n)
 }
 
 
