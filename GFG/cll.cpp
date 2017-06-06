@@ -52,6 +52,41 @@ void print(Node *head)
 	cout << "\n";
 }
 
+// * Asked in : Yahoo
+void SplitList(Node *head, Node **head1, Node **head2)
+{
+	Node *slow = head;
+	Node *fast = head;
+	// //Use Tortoise and Hare Algo a bit different implm than SLL and DLL
+	// fast->next if points to head then it is odd link list
+	// fast->net->next if points to head then it is even link list
+	// then slow will be mid point of the list
+	while((fast->next != head) && (fast->next->next !=head))
+	{
+		slow = slow->next;
+		fast = fast->next->next;
+	}
+
+	//if it is even list
+	if(fast->next->next == head)
+	{
+		fast = fast->next;
+	}
+
+	*head1 = head;
+
+	//if list doesnt contain only 1 node
+	if(head->next != head)
+	{
+		*head2 = slow->next;
+	}
+	//making 2nd half circular
+	fast->next = slow->next; //since head2 can be NULL if one node in list
+	//makin 1st hhalf circular
+	slow->next = head;
+}
+
+
 // V.IMP ***Tricky Asked in: Amazon, Microsoft
 void SortedInsert(Node **headref,int data)
 {
@@ -98,9 +133,9 @@ int main(int argc, char **argv)
 	insertatend(&head,5);
 	insertatend(&head,7);
 	print(head);
-	//splitlist(head,&head1,&head2);
-	//print(head1);
-	//print(head2);
+	SplitList(head,&head1,&head2);
+	print(head1);
+	print(head2);
 	SortedInsert(&head,3);
 	print(head);
 	SortedInsert(&head,0);
