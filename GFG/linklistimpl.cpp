@@ -386,6 +386,37 @@ Node* SortedMerge(Node *a, Node *b)
 	return result;
 }
 
+// Recursive Merge solution
+Node* SortedMergeRec(Node *h1, Node *h2)
+{
+	Node *result = NULL;
+
+	if(h1 == NULL)
+	{
+		return h2;
+	}
+
+	if(h2 == NULL)
+	{
+		return h1;
+	}
+
+	if(h1->data < h2->data)
+	{
+		result = h1;
+		result->next = SortedMergeRec(h1->next,h2);
+	}
+	else
+	{
+		result = h2;
+		result->next = SortedMergeRec(h1,h2->next);
+	}
+	// Time Complexity : O(n + m) utimately := O(z)
+	// Space Complexity : O(1) ?
+	return result;
+}
+
+
 
 int main(int argc, char const *argv[])
 {
@@ -459,6 +490,22 @@ int main(int argc, char const *argv[])
 
 	result = SortedMerge(a,b);
 	printlist(result);
+
+	Node *h1 = NULL;
+	insertatend(&h1,6);
+	insertatend(&h1,5);
+	insertatend(&h1,2);
+	insertatend(&h1,1);
+	printlist(h1);
+	Node *h2 = NULL;
+	insertatend(&h2,4);
+	insertatend(&h2,3);
+	insertatend(&h2,2);
+	insertatend(&h2,0);
+	printlist(h2);
+
+	Node *res = SortedMergeRec(h1,h2);
+	printlist(res);
 
 	return 0;
 }
