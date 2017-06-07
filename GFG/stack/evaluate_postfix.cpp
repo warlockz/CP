@@ -40,6 +40,8 @@ int evaluatePostfixExp(char exp[])
 		i++;
 	}
 	return stk.top();
+
+	// Time Complexity : O(n) where n is no. of characters in exp
 }
 
 int main(int argc, char const *argv[])
