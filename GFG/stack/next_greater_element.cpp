@@ -8,14 +8,14 @@ void printNGE(int arr[],int n)
 
 	stack<int> s;
 	int element, next;
-
+	// push 1st elemnt on stack
 	s.push(arr[0]);
 	next = -1;
 
 	for (int i = 1; i < n; ++i)
 	{
 		next = arr[i];
-		if (!s.empty())
+		if (!s.empty())	
 		{
 			element = s.top();
 			s.pop();
