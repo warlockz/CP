@@ -21,9 +21,16 @@ ostream& operator<<(ostream& os,stack<int> s)
 	os<<"\n";
 	return os;
 }
-
+//Algo
+//1 2 3 4
+//4 3 
+//3
+//2
+//3 2
+//4 3 2
 void pushatbottom(stack<int>& s,int item)
 {
+	cout<<"At Start :"<<s;
 	if(s.empty())
 	{
 		s.push(item);
@@ -35,6 +42,7 @@ void pushatbottom(stack<int>& s,int item)
 		pushatbottom(s,item);
 		s.push(itm);
 	}
+	cout<<"At End :"<<s;
 }
 
 void ReverseStack(stack<int>& s)
