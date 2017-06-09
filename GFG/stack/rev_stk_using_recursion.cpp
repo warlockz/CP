@@ -37,10 +37,10 @@ void pushatbottom(stack<int>& s,int item)
 	}
 	else
 	{
-		int itm = s.top();
+		int temp = s.top();
 		s.pop();
 		pushatbottom(s,item);
-		s.push(itm);
+		s.push(temp);
 	}
 	cout<<"At End :"<<s;
 }

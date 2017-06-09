@@ -18,9 +18,23 @@ stack* createstack(int capacity)
 	s->arr = (char*)malloc(s->capacity*sizeof(char));
 }
 
-void push()
+void push(stack *topref,char data)
 {
-	//TODO
+	
+}
+
+char pop(stack *topref)
+{
+
+}
+
+void print(stack *topref)
+{
+	cout<< "Stack contents : \n";
+	while(topref->top != -1)
+	{
+		cout<<topref->arr[topref->top--];
+	}
 }
 
 int main()
