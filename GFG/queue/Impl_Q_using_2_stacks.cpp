@@ -11,16 +11,16 @@ struct Queue
 };
 
 
-void enQueue(Queue<int> q,int data)
+template<typename T>
+void enQueue(Queue<T> &q,int data)
 {
-	cout << "Data : "<<data << "\n";
 	q.s1.push(data);
-	cout << "Size :"<<q.s1.size();
 }
 
-int deQueue(Queue<int> q)
+template<typename T>
+int deQueue(Queue<T> &q)
 {
-	if(q.s1.empty() &&  q.s2.empty())
+	if((q.s1.empty()) && (q.s2.empty()))
 	return -1;
 	
 	if(q.s2.empty())
@@ -39,7 +39,14 @@ int deQueue(Queue<int> q)
 int main(int argc, char const *argv[])
 {
 	//Queue<int> *q = (Queue<int> *)malloc(sizeof(Queue<int>));
+	//cout << " Q s1 Size :"<<q->s1.size() << "\n";
+	//q->s2.push(10);
+	//q->s2.push(11);
+	
+
+	//cout << " Q s2 Size :"<<q->s2.size() << "\n";
 	Queue<int> q;
+
 	enQueue(q,1);
 	enQueue(q,2);
 	enQueue(q,3);
