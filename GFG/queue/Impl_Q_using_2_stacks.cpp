@@ -10,6 +10,10 @@ struct Queue
 	stack<T> s2;
 };
 
+//***************************************************************
+//Method 2 : By Making Dequeue operation costly
+//Implementation using two stacks
+//***************************************************************
 
 template<typename T>
 void enQueue(Queue<T> &q,int data)
@@ -36,6 +40,42 @@ int deQueue(Queue<T> &q)
 	return val;
 }
 
+//***************************************************************
+//Implementation using one stack + recursion(Function call stack)
+//***************************************************************
+template<typename T>
+void enQueuefn(Queue<T> &q,int data)
+{
+	q.s1.push(data);
+}
+
+template<typename T>
+int deQueuefn(Queue<T> &q)
+{
+	if(q.s1.empty())
+	{
+		return -1;
+	}
+	else if(q.s1.size() == 1)
+	{
+		int val = q.s1.top();
+		q.s1.pop();
+		return val;
+	}
+	else
+	{
+		int val = q.s1.top();
+		q.s1.pop();	
+		int res = deQueuefn(q);
+		q.s1.push(val);
+		return res;
+	}
+}
+
+//***************************************************************
+//Asked in: Inmobi, Accolite, Adobe, 
+//Amazon, DE Shaw, Flipkart, Goldman Sachs, InfoEdge, MakeMyTrip, Microsoft, Oracle
+//***************************************************************
 int main(int argc, char const *argv[])
 {
 	//Queue<int> *q = (Queue<int> *)malloc(sizeof(Queue<int>));
@@ -56,6 +96,19 @@ int main(int argc, char const *argv[])
 	{
 		cout << "Deque Elements : "<<deQueue(q) << "\n";
 	}
+
+	Queue<int> q1;
+
+	enQueuefn(q1,1);
+	enQueuefn(q1,2);
+	enQueuefn(q1,3);
+	enQueuefn(q1,4);
+
+	for (int i = 0; i < 4; ++i)
+	{
+		cout << "Deque Elements : "<<deQueuefn(q1) << "\n";
+	}
+
 
 	return 0;
 }
