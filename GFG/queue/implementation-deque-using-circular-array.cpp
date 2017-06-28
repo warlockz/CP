@@ -26,6 +26,27 @@ public:
     int  getRear();
 };
 
+
+bool  Dequeue::isFull()
+{
+	return ((front == 0) || (front == (rear + 1)) || (rear == size-1));
+}
+
+bool Dequeue::isEmpty()
+{
+	return (front == -1);
+}
+
+int  Dequeue::getFront()
+{
+
+}
+
+int Dequeue::getRear()
+{
+	
+}
+
 void Dequeue::insertrear(int key)
 {
 
@@ -44,26 +65,6 @@ void  Dequeue::deletefront()
 }
 
 void  Dequeue::deleterear()
-{
-	
-}
-
-bool  Dequeue::isFull()
-{
-
-}
-
-bool Dequeue::isEmpty()
-{
-
-}
-
-int  Dequeue::getFront()
-{
-
-}
-
-int Dequeue::getRear()
 {
 	
 }
