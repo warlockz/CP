@@ -50,6 +50,36 @@ void printpostorder(Node *root)
 	printpostorder(root->right);
 	cout << root->data;
 }
+/********************************************************************
+ Time Complexity: O(n)  all problem where tree traversal is involved 
+Auxiliary Space : If we don’t consider size of stack for function calls then O(1) otherwise O(n).
+*******************************************************************/
+
+// POSTORDER is used to delete the tree since we have to del childs `st than parent
+//Similarly, Preorder to copy tree
+void deleteNodes(Node *root)
+{
+	if (root == NULL)
+	{
+		return;
+	}
+	deleteNodes(root->left);
+	deleteNodes(root->right);
+	free(root);
+}
+
+
+void deleteTree(Node **ref)
+{
+	deleteNodes(*ref);
+	*ref = NULL;
+}
+
+/******************************************************************************
+Delete Tree : -
+Time Complexity: O(n)
+Space Complexity: If we don’t consider size of stack for function calls then O(1) otherwise O(n)
+*********************************************************************************/
 
 int main(int argc, char const *argv[])
 {
@@ -67,5 +97,6 @@ int main(int argc, char const *argv[])
 	cout << "PostOrder Traversals : -\n";
 	printpostorder(tree);
 	cout << "\n";
+	deleteTree(&tree);
 	return 0;
 }
