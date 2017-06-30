@@ -57,6 +57,7 @@ Auxiliary Space : If we don’t consider size of stack for function calls then O
 
 // POSTORDER is used to delete the tree since we have to del childs `st than parent
 //Similarly, Preorder to copy tree
+// We can use traversal to solve problem like below ones
 void deleteNodes(Node *root)
 {
 	if (root == NULL)
@@ -75,10 +76,113 @@ void deleteTree(Node **ref)
 	*ref = NULL;
 }
 
+int sizeoftree(Node *root)
+{
+	if (root == NULL)
+	{
+		return 0;
+	}
+	else
+	{
+		return (sizeoftree(root->left) + 1 + sizeoftree(root->right));
+	}
+}
+
+int max(Node *root)
+{
+	if (root == NULL)
+	{
+		return 0 ;
+	}
+	else
+	{
+		int res = root->data;
+		int lres = max(root->left);
+		int rres = max(root->right);
+		if (lres > res)
+		{
+			res = lres;
+		}
+		if (rres > res)
+		{
+			res = rres;
+		}
+		return res;
+	}
+}
+
+int min(Node *root)
+{
+	if (root == NULL)
+	{
+		return 0 ;
+	}
+	else
+	{
+		int res = root->data;
+		int lres = max(root->left);
+		int rres = max(root->right);
+		if (lres < res)
+		{
+			res = lres;
+		}
+		if (rres < res)
+		{
+			res = rres;
+		}
+		return res;
+	}
+}
+
+void printcurrentview(Node *root,int level,int& maxlevel)
+{
+	if (root == NULL)
+	{
+		return;
+	}
+
+	if (maxlevel < level)
+	{
+		cout << root->data << "\n";
+		maxlevel = level;
+	}
+	printcurrentview(root->left,level+1,maxlevel);
+	printcurrentview(root->right,level+1,maxlevel);
+}
+
+void printleftviewoftree(Node *root)
+{
+	int maxlevel = 0;
+	printcurrentview(root,1,maxlevel);
+}
+/************************************************************************************
+Asked in: Amazon, Flipkart, Knowlarity, OLA, Open Solutions, Samsung, Snapdeal, Twitter
+*************************************************************************************/
+void printrightcurrentview(Node *root,int level,int& maxlevel)
+{
+	if (root == NULL)
+	{
+		return;
+	}
+
+	if (maxlevel < level)
+	{
+		cout << root->data << "\n";
+		maxlevel = level;
+	}
+	printrightcurrentview(root->right,level+1,maxlevel);
+	printrightcurrentview(root->left,level+1,maxlevel);
+}
+
+void printrightviewoftree(Node *root)
+{
+	int maxlevel = 0;
+	printrightcurrentview(root,1,maxlevel);
+}
+
 /******************************************************************************
-Delete Tree : -
-Time Complexity: O(n)
-Space Complexity: If we don’t consider size of stack for function calls then O(1) otherwise O(n)
+Abive fns :-
+Time Complexity & Space Complexity: Similar to Tree Traversals
 *********************************************************************************/
 
 int main(int argc, char const *argv[])
@@ -97,6 +201,13 @@ int main(int argc, char const *argv[])
 	cout << "PostOrder Traversals : -\n";
 	printpostorder(tree);
 	cout << "\n";
+	cout << "Size of tree : "<< sizeoftree(tree) <<"\n";
+	cout << "Maximum elemt of tree : "<< max(tree) <<"\n";
+	cout << "Minmum elemt of tree : "<< min(tree) <<"\n";
+	cout << "Print left view of tree : \n";
+	printleftviewoftree(tree);
+	cout << "Print right view of tree : \n";
+	printrightviewoftree(tree);
 	deleteTree(&tree);
 	return 0;
 }
