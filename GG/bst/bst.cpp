@@ -99,6 +99,39 @@ Node* deletenode(Node *root,int key)
 	return root;
 }
 
+void findPredecessorSuccessor(Node *root,Node*& pre,Node*& suc,int key)
+{
+	if (root == NULL)
+	{
+		return;
+	}
+
+	if (root->data == key)
+	{
+		//the maxm value is Predecessor of left subtree
+		if (root->left != NULL)
+		{
+			Node *temp = root->left;;
+			while(temp->right)
+				temp = temp->right;
+			pre = temp;
+		}
+
+		//the minm value is Successor of right subtree
+		if (root->right != NULL)
+		{
+			Node *temp = root->right;
+			while(temp->left)
+				temp = temp->left;
+			suc = temp;
+		}
+		return;
+	}
+
+	
+
+}
+
 void printinorderbst(Node *root)
 {
 	if(root == NULL)
