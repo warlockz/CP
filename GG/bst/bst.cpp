@@ -153,7 +153,7 @@ int main(int argc, char **argv)
 	tree = deletenode(tree,15);
 	printinorderbst(tree);
 	cout << "\n";
-	tree = deletenode(tree,11);
+	deletenode(tree,11);
 	printinorderbst(tree);
 	cout << "\n";
 	return 0;
