@@ -55,10 +55,48 @@ Node* search(Node *root,int key)
 	}
 }
 
+Node* minimumValueNode(Node *root)
+{
+	Node *cur = root;
+
+	while(cur->left != NULL)
+		cur = cur->left;
+	return cur;
+}
+
 Node* deletenode(Node *root,int key)
 {
-
-
+	if(root == NULL) return root;
+	
+	if (key < root->data)
+	{
+		root->left = deletenode(root->left,key);
+	}
+	else if (key > root->data)
+	{
+		root->right = deletenode(root->right,key);
+	}
+	else
+	{
+		if (root->left == NULL)
+		{
+			Node *temp = root->right;
+			free(root);
+			return temp;
+		}
+		else if (root->right == NULL)
+		{
+			Node *temp = root->left;
+			free(root);
+			return temp;
+		}
+		//Now the node to delete has two node so need to get inorder sucessor of the node 
+		//and swap or copy that node contents then delete the found node
+		Node *temp = minimumValueNode(root->right);
+		root->data = temp->data;
+		root->right = deletenode(root->right,temp->data);
+	}
+	return root;
 }
 
 void printinorderbst(Node *root)
@@ -76,11 +114,18 @@ void printinorderbst(Node *root)
 int main(int argc, char **argv)
 {
 	Node *tree = NULL;
-	tree = insert(tree,1);
+	tree = insert(tree,10);
 	insert(tree,2);
 	insert(tree,3);
-	insert(tree,4);
-	insert(tree,5);
+	insert(tree,1);
+	insert(tree,15);
+	insert(tree,12);
+	insert(tree,11);
+	insert(tree,13);
+	insert(tree,20);
+	insert(tree,18);
+	insert(tree,17);
+	insert(tree,23);
 	cout << "Printing BST :  \n";
 	printinorderbst(tree);
 	cout << "\n";
@@ -98,12 +143,18 @@ int main(int argc, char **argv)
 	temp = search(tree,10);
 	if(temp)
 	{
-		cout << "Forund : "<<temp->data<< "\n";
+		cout << "Found : "<<temp->data<< "\n";
 	}
 	else
 	{
 		cout << "Not Found 10"<< "\n";
 	}
-
+	cout << "\n";
+	tree = deletenode(tree,15);
+	printinorderbst(tree);
+	cout << "\n";
+	tree = deletenode(tree,11);
+	printinorderbst(tree);
+	cout << "\n";
 	return 0;
 }
