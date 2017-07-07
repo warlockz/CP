@@ -128,7 +128,16 @@ void findPredecessorSuccessor(Node *root,Node*& pre,Node*& suc,int key)
 		return;
 	}
 
-	
+	if (key < root->data)
+	{
+		pre = root;	
+		findPredecessorSuccessor(root->left,pre,suc,key);
+	}
+	else
+	{
+		suc = root;
+		findPredecessorSuccessor(root->right,pre,suc,key);
+	}
 
 }
 
@@ -189,5 +198,8 @@ int main(int argc, char **argv)
 	deletenode(tree,11);
 	printinorderbst(tree);
 	cout << "\n";
+	Node *pre = NULL ,*suc = NULL;
+	findPredecessorSuccessor(tree,pre,suc,13);
+	cout<<"Predecessor : "<<pre->data<<" Successor : "<<suc->data<<"\n";
 	return 0;
 }
